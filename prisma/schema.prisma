@@ -1,0 +1,51 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+// --- Core daily price candle (Upbit) ---
+model PriceDaily {
+    id     Int      @id @default(autoincrement())
+    market String // "KRW-BTC"
+    date   DateTime // KST 09:00 종가 기준
+    open   Float
+    high   Float
+    low    Float
+    close  Float
+    volume Float
+
+    @@unique([market, date])
+}
+
+// --- 투자 주기 열거형 ---
+enum Period {
+    DAILY
+    WEEKLY
+    MONTHLY
+}
+
+// --- (선택) 사용자 및 저장된 투자플랜 ---
+model User {
+    id        String           @id @default(uuid())
+    email     String           @unique
+    password  String
+    plans     InvestmentPlan[]
+    createdAt DateTime         @default(now())
+}
+
+model InvestmentPlan {
+    id     Int     @id @default(autoincrement())
+    user   User?   @relation(fields: [userId], references: [id])
+    userId String?
+
+    markets   String // JSON 직렬화된 문자열, 예: "[\"KRW-BTC\",\"KRW-ETH\"]"
+    amount    Float
+    period    Period
+    start     DateTime
+    end       DateTime
+    createdAt DateTime @default(now())
+}
