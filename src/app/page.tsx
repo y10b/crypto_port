@@ -23,10 +23,14 @@ export default function HomePage() {
       label: string;
       data: { date: string; evalPrice: number }[];
     }[] = [];
-    for (const [label, result] of Object.entries(json) as [string, any][]) {
+    type SimResponse = { timeline: { date: string; evalPrice: number }[] };
+    for (const [label, result] of Object.entries(json) as [
+      string,
+      SimResponse
+    ][]) {
       newData.push({
         label,
-        data: result.timeline.map((t: any) => ({
+        data: result.timeline.map((t) => ({
           date: t.date,
           evalPrice: t.evalPrice,
         })),

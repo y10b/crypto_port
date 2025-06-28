@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     .map((m) => m.trim())
     .filter(Boolean);
 
-  const results: Record<string, any> = {};
+  const results: Record<string, unknown> = {};
 
   await Promise.all(
     markets.map(async (m) => {
