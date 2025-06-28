@@ -10,6 +10,7 @@ import {
   Legend,
   CategoryScale,
   Filler,
+  TooltipItem,
 } from "chart.js";
 import { format } from "date-fns";
 
@@ -49,12 +50,14 @@ export function ResultChart({ dataSets, enabled }: ChartProps) {
       const baseHue = (idx * 60) % 360;
       const hue = isInvestment ? (baseHue + 30) % 360 : baseHue;
       const border = `hsl(${hue}, 70%, ${isInvestment ? 60 : 50}%)`;
-      const bg = (context: any) => {
-        if (isInvestment) return "transparent"; // 투자금은 배경 없음
-        const { ctx, chartArea } = context.chart as {
+      const bg = (context: {
+        chart: {
           ctx: CanvasRenderingContext2D;
-          chartArea: any;
+          chartArea: { top: number; bottom: number } | null;
         };
+      }) => {
+        if (isInvestment) return "transparent"; // 투자금은 배경 없음
+        const { ctx, chartArea } = context.chart;
         if (!chartArea) return border;
         const gradient = ctx.createLinearGradient(
           0,
@@ -107,12 +110,11 @@ export function ResultChart({ dataSets, enabled }: ChartProps) {
         cornerRadius: 12,
         padding: 12,
         callbacks: {
-          label: (ctx: any) => {
-            const raw = Number(ctx.raw);
-            const isInvestment = ctx.dataset.label === "투자금";
+          label: (tooltipItem: TooltipItem<"line">) => {
+            const raw = Number(tooltipItem.raw);
             const formattedValue = `₩${raw.toLocaleString("ko-KR")}`;
 
-            return `${ctx.dataset.label}: ${formattedValue}`;
+            return `${tooltipItem.dataset.label}: ${formattedValue}`;
           },
         },
       },
