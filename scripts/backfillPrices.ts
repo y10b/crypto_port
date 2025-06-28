@@ -5,7 +5,20 @@ import { subDays } from "date-fns";
 const MARKETS =
   process.argv.slice(2).length > 0
     ? process.argv.slice(2)
-    : ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP", "KRW-ADA"];
+    : [
+        "KRW-BTC",
+        "KRW-ETH",
+        "KRW-SOL",
+        "KRW-XRP",
+        "KRW-ADA",
+        "KRW-DOGE",
+        "KRW-PEPE",
+        "KRW-TRUMP",
+        "KRW-AVAX",
+        "KRW-MATIC",
+        "KRW-DOT",
+        "KRW-LINK",
+      ];
 
 const BATCH = 200;
 

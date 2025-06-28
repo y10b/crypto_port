@@ -2,7 +2,20 @@ import { prisma } from "../src/lib/prisma";
 import { getDailyCandle } from "../src/lib/upbit";
 
 // 수집할 마켓 코드 배열
-const MARKETS = ["KRW-BTC", "KRW-ETH", "KRW-SOL"];
+const MARKETS = [
+  "KRW-BTC",
+  "KRW-ETH",
+  "KRW-SOL",
+  "KRW-XRP",
+  "KRW-ADA",
+  "KRW-DOGE",
+  "KRW-PEPE",
+  "KRW-TRUMP",
+  "KRW-AVAX",
+  "KRW-MATIC",
+  "KRW-DOT",
+  "KRW-LINK",
+];
 
 async function main() {
   const now = new Date();

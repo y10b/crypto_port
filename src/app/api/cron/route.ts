@@ -2,7 +2,20 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getDailyCandle } from "@/lib/upbit";
 
-const MARKETS = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP", "KRW-ADA"];
+const MARKETS = [
+  "KRW-BTC",
+  "KRW-ETH",
+  "KRW-SOL",
+  "KRW-XRP",
+  "KRW-ADA",
+  "KRW-DOGE",
+  "KRW-PEPE",
+  "KRW-TRUMP",
+  "KRW-AVAX",
+  "KRW-MATIC",
+  "KRW-DOT",
+  "KRW-LINK",
+];
 
 export async function POST() {
   const today = new Date();

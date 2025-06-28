@@ -15,7 +15,8 @@ export async function simulate(params: {
     orderBy: { date: "asc" },
   });
 
-  if (priceRows.length === 0) return { timeline: [], final: null };
+  if (priceRows.length === 0)
+    return { timeline: [], final: null, investmentTimeline: [] };
 
   const timeline: {
     date: Date;
@@ -23,6 +24,11 @@ export async function simulate(params: {
     qty: number;
     evalPrice: number;
     roi: number;
+  }[] = [];
+
+  const investmentTimeline: {
+    date: Date;
+    cost: number;
   }[] = [];
 
   let cost = 0;
@@ -51,8 +57,9 @@ export async function simulate(params: {
     const evalPrice = row.close * qty;
     const roi = (evalPrice - cost) / cost;
     timeline.push({ date: row.date, cost, qty, evalPrice, roi });
+    investmentTimeline.push({ date: row.date, cost });
     lastBuy = row.date;
   }
 
-  return { timeline, final: timeline.at(-1) ?? null };
+  return { timeline, final: timeline.at(-1) ?? null, investmentTimeline };
 }
