@@ -1,8 +1,8 @@
 {
-  "cron": {
-    "daily-upbit": {
+  "crons": [
+    {
       "path": "/api/cron",
       "schedule": "0 0 * * *"
     }
-  }
+  ]
 }
